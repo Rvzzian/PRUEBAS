@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
@@ -17,7 +18,8 @@ import javax.swing.JPanel;
  */
 public class Breportes extends javax.swing.JPanel {
     private Color backgroundColor = new Color(200, 200, 200);
-    
+    private ActionListener actionListener;
+
     public Breportes() {
         initComponents();
         setOpaque(false); // Hacer que el panel no sea opaco para personalizar el fondo
@@ -32,6 +34,9 @@ public class Breportes extends javax.swing.JPanel {
             public void mouseReleased(MouseEvent e) {
                 backgroundColor = new Color(200, 200, 200); // Regresa a gris claro al soltar
                 repaint(); // Redibujar el botón
+                 if (actionListener != null) {
+                    actionListener.actionPerformed(null); // llamar al método actionPerformed pasandole un valor nulo pues solo necesito la accion y no el objeto
+                }
             }
         });
     }
@@ -51,16 +56,16 @@ public class Breportes extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(115, Short.MAX_VALUE)
+                .addContainerGap(116, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addContainerGap(113, Short.MAX_VALUE))
+                .addContainerGap(115, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(38, Short.MAX_VALUE)
+                .addContainerGap(37, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 @Override
@@ -74,8 +79,12 @@ public class Breportes extends javax.swing.JPanel {
         // Dibujar un rectángulo con esquinas redondeadas
         g2.fillRoundRect(0, 0, getWidth(), getHeight(), 30, 30); // Esquinas redondeadas (30px)
     }
-
+    public void addActionListener(ActionListener actionListener) {
+        this.actionListener = actionListener;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
+
+
 }

@@ -1,4 +1,3 @@
-
 package com.proyect.preubas2.model;
 
 import javax.swing.Icon;

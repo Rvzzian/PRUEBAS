@@ -4,6 +4,11 @@
  */
 package com.proyect.preubas2.form;
 
+import com.proyect.preubas2.api.BusquedaMasivasApi;
+import java.util.List;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Usuario
@@ -27,25 +32,69 @@ public class Form_historial extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        btnBuscarTipo = new javax.swing.JButton();
+        txtTipo = new javax.swing.JTextField();
+        btnbuscarGen = new javax.swing.JButton();
+        txtGeneracion = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        listaPokemones = new javax.swing.JList<>();
 
-        jLabel1.setText("historial");
+        btnBuscarTipo.setText("tipo");
+        btnBuscarTipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarTipoActionPerformed(evt);
+            }
+        });
+
+        txtTipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTipoActionPerformed(evt);
+            }
+        });
+
+        btnbuscarGen.setText("generacion");
+        btnbuscarGen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnbuscarGenActionPerformed(evt);
+            }
+        });
+
+        jScrollPane1.setViewportView(listaPokemones);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(130, 130, 130)
-                .addComponent(jLabel1)
-                .addContainerGap(138, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtTipo)
+                            .addComponent(txtGeneracion))
+                        .addGap(21, 21, 21)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnbuscarGen)
+                            .addComponent(btnBuscarTipo))
+                        .addGap(85, 85, 85))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(205, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(85, 85, 85)
-                .addComponent(jLabel1)
-                .addContainerGap(109, Short.MAX_VALUE))
+                .addGap(22, 22, 22)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBuscarTipo)
+                    .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnbuscarGen)
+                    .addComponent(txtGeneracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -59,16 +108,64 @@ public class Form_historial extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(55, 55, 55))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(120, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(120, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txtTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTipoActionPerformed
+         
+    }//GEN-LAST:event_txtTipoActionPerformed
+
+    private void btnbuscarGenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarGenActionPerformed
+      int generacion;
+    try {
+        generacion = Integer.parseInt(txtGeneracion.getText()); // Campo de texto para ingresar la generación
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Por favor, ingrese un número de generación válido.");
+        return;
+    }
+    
+    BusquedaMasivasApi busquedaMasivasApi = new BusquedaMasivasApi();
+    List<String> pokemones = busquedaMasivasApi.obtenerPokemonesPorGeneracion(generacion);
+    
+    if (pokemones.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "No se encontraron Pokemones para la generación: " + generacion);
+    } else {
+        DefaultListModel<String> modeloLista = new DefaultListModel<>();
+        for (String pokemon : pokemones) {
+            modeloLista.addElement(pokemon);
+        }
+        listaPokemones.setModel(modeloLista); // `listaPokemones` es un componente JList
+    }
+    }//GEN-LAST:event_btnbuscarGenActionPerformed
+
+    private void btnBuscarTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarTipoActionPerformed
+        String tipo = txtTipo.getText(); // Campo de texto donde ingresas el tipo
+        BusquedaMasivasApi busquedaMasivasApi = new BusquedaMasivasApi();
+        List<String> pokemones = busquedaMasivasApi.obtenerPokemonesPorTipo(tipo);
+
+        if (pokemones.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No se encontraron Pokemones para el tipo: " + tipo);
+        } else {
+            DefaultListModel<String> modeloLista = new DefaultListModel<>();
+            for (String pokemon : pokemones) {
+                modeloLista.addElement(pokemon);
+            }
+            listaPokemones.setModel(modeloLista); // `listaPokemones` es un componente JList
+        }
+    }//GEN-LAST:event_btnBuscarTipoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btnBuscarTipo;
+    private javax.swing.JButton btnbuscarGen;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JList<String> listaPokemones;
+    private javax.swing.JTextField txtGeneracion;
+    private javax.swing.JTextField txtTipo;
     // End of variables declaration//GEN-END:variables
 }

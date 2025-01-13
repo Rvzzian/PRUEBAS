@@ -31,7 +31,7 @@ public class Menu extends javax.swing.JPanel {
         init();
     }
     private void init(){
-         
+        listMenu1.addItem(new Model_Menu("0","HOME",Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu("1","REPORTES",Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu("3","USUARIO",Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu("2","HISTORIAL",Model_Menu.MenuType.MENU));
@@ -40,7 +40,6 @@ public class Menu extends javax.swing.JPanel {
         listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY)); // Espacio vacío
         listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY)); // Espacio vacío
         listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY)); // Espacio vací
-        listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY)); // Espacio vacío
         listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY)); // Espacio vacío
         listMenu1.addItem(new Model_Menu("5","SALIR",Model_Menu.MenuType.MENU));
     }

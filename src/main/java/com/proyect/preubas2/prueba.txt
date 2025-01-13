@@ -1,0 +1,95 @@
+package com.proyect.preubas2;
+import java.awt.Color;
+import com.proyect.preubas2.event.Event_Menu;
+import com.proyect.preubas2.form.Form_historial;
+import com.proyect.preubas2.form.Form_reportes;
+import com.proyect.preubas2.form.Form_usuarios;
+import com.proyect.preubas2.form.FormHome;
+import com.proyect.preubas2.swing.pokeapi.InfoReportes;
+
+import javax.swing.JComponent;
+
+public class Main extends javax.swing.JFrame {
+    private  Form_reportes Form_1;
+    private  Form_usuarios Form_2;
+    private  Form_historial Form_3;
+    private  FormHome Form_0;
+    private  InfoReportes Form_4;
+
+    public Main() {
+        initComponents();
+        setBackground(new Color(0, 0, 0, 0));
+        Form_0= new FormHome();
+        Form_1 = new Form_reportes ();
+        Form_2 = new Form_usuarios(this);
+        Form_3= new Form_historial();
+        Form_4 =new InfoReportes();
+        menu.initMoving(Main.this);
+        menu.addEvent_Menu(new Event_Menu() {
+            @Override
+    public void selected(int index) {
+        switch (index) {
+            case 0: 
+                 setForm(new FormHome());
+                break;
+            case 1: 
+                setForm(new Form_reportes());
+                break;
+            case 2: 
+               setForm(Form_2);
+                break;
+            case 3: 
+                setForm(new Form_historial());
+                break;
+            case 4: 
+                
+                break;  
+            case 5: 
+                
+                break;
+            case 6: 
+                // Espacio vacío
+                break;
+            case 7: 
+                // Espacio vacío
+                break;
+            case 8: 
+                // Espacio vacío
+                break;
+            case 9: 
+                 
+                break;
+            case 10: 
+            
+                break;
+            case 11: 
+                 System.exit(0); // Cerrar la aplicación
+                break;                
+        }
+    }
+        });
+        setForm(new Form_reportes());
+    }
+    public void setForm(JComponent com) {
+        mainPanel1.removeAll();
+        mainPanel1.add(com);
+        mainPanel1.repaint();
+        mainPanel1.revalidate();
+    }
+    @SuppressWarnings("unchecked")
+                 
+    public static void main(String args[]) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Main().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify                     
+    private com.proyect.preubas2.component.Header header1;
+    private javax.swing.JPanel mainPanel1;
+    private com.proyect.preubas2.component.Menu menu;
+    private com.proyect.preubas2.swing.PanelBorder panelBorder1;
+    // End of variables declaration                   
+}

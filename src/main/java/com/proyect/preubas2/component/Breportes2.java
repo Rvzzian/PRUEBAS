@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -13,7 +14,9 @@ import java.awt.event.MouseEvent;
  * @author Usuario
  */
 public class Breportes2 extends javax.swing.JPanel {
- private Color backgroundColor = new Color(200, 200, 200);
+    private ActionListener actionListener;
+    private Color backgroundColor = new Color(200, 200, 200);
+    
     public Breportes2() {
        initComponents();
         setOpaque(false); 
@@ -21,13 +24,16 @@ public class Breportes2 extends javax.swing.JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 backgroundColor = new Color(144, 238, 144); 
-                repaint(); // Redibujar el botón
+                repaint();
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
                 backgroundColor = new Color(200, 200, 200); 
-                repaint(); // Redibujar el botón
+                repaint();
+                 if (actionListener != null) {
+                    actionListener.actionPerformed(null);
+                }
             }
         });
     }
@@ -73,7 +79,9 @@ public class Breportes2 extends javax.swing.JPanel {
         // Dibujar un rectángulo con esquinas redondeadas
         g2.fillRoundRect(0, 0, getWidth(), getHeight(), 30, 30); // Esquinas redondeadas (30px)
     }
-
+    public void addActionListener(ActionListener actionListener) {
+        this.actionListener = actionListener;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
